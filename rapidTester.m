@@ -165,7 +165,7 @@ classdef rapidTester < handle
             allFiles = {};
             allFields = {};
             for idx = 1:numel(folderPath)
-                filelist = dir(fullfile(folderPath{idx}, '**\*.m'));  %get list of files and folders in any subfolder
+                filelist = dir(fullfile(folderPath{idx},'**',filesep,'*.m'));  %get list of files and folders in any subfolder
 
                 files = fullfile({filelist.folder}, {filelist.name});
                 files = files(~strcmp(files, [mfilename '.m']));
