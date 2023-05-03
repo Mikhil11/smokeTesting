@@ -56,5 +56,5 @@ for i=2:column
 end
 
 % converts uitable to html file this is a third party m file
-uitable2html(uit,'testresults/diffreport.html')
+uitable2html(uit,'testresults/comparisonreport.html')
 end
