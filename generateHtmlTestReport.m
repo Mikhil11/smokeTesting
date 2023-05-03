@@ -16,7 +16,7 @@ end
 a = unique(a);
 failedCaseValues = cell(1,numel(fieldNames));
 
-# For a given test case check against different MATLAB release whether its failed or passed. Add right tick for pass case and cross tick for failed case
+% For a given test case check against different MATLAB release whether its failed or passed. Add right tick for pass case and cross tick for failed case
 for i =1:numel(a)
     for j=1:numel(fieldNames)
         tempData = getfield(resultComparisonReport,fieldNames{j});
