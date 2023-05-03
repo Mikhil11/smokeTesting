@@ -1,12 +1,13 @@
 function generateHtmlTestReport(myMatFile)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+
+% load mystructfilenew.mat in the workspace and get fieldnames which are different MATLAB versions
 load(myMatFile);
 fieldNames = fieldnames(resultComparisonReport);
-%matobj = matfile(myMatFile);
-%varlist = who(matobj);
 a={};
 
+% combine all the failed cases from different MATLAB versions and then remove duplicates
 for i=1:numel(fieldNames)
     tempData = getfield(resultComparisonReport,fieldNames{i});
     temp = {tempData.Name};
@@ -15,6 +16,7 @@ end
 a = unique(a);
 failedCaseValues = cell(1,numel(fieldNames));
 
+# For a given test case check against different MATLAB release whether its failed or passed. Add right tick for pass case and cross tick for failed case
 for i =1:numel(a)
     for j=1:numel(fieldNames)
         tempData = getfield(resultComparisonReport,fieldNames{j});
@@ -32,6 +34,7 @@ for i = 1:numel(failedCaseValues)
 end
 
 
+% convert the data into uitable
 fig = uifigure;
 uit = uitable(fig,"Data",a_updated);
 uit.ColumnName = horzcat("Failed Cases",fieldNames(:)');
@@ -39,6 +42,8 @@ tableData = uit.Data;
 dimData = size(tableData);
 row = dimData(1);
 column = dimData(2);
+
+% based on pass or fail add color to UI table. In case if we directly publish ui table instead of HTML report
 for i=2:column
     for j = 1:numel(row)
         if tableData{j,i} == 0
@@ -49,5 +54,7 @@ for i=2:column
         addStyle(uit,s,'cell',[j,i])
     end
 end
+
+% converts uitable to html file this is a third party m file
 uitable2html(uit,'testresults/diffreport.html')
 end
